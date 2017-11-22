@@ -1,7 +1,6 @@
 /*
 	Checks for and handles collisions between objects like player, projectiles, and asteroids.
 	Responsible for determining if conditions of a collision (ex distance threshold).
-	NOTE: alter as needed.
 
 
  */
@@ -22,8 +21,7 @@ class CollisionSystem extends System {
 		// this.enemies = enemies;
 
 		this.bossSystem = bossSystem;
-		this.boss = bossSystem.getObjects()[0];
-		this.bossBullets = this.boss.getBullets(); //Array<Bullet>
+		
 
 	}
 
@@ -64,6 +62,7 @@ class CollisionSystem extends System {
 	render() {}
 
 	//check if GameObjects a and b are colliding.
+	//@param a, b: pass 2 GameObjects.
 	static Distance_check(a, b){
 		if (a instanceof GameObject == false) { throw new TypeError("a needs to be a GameObject."); }
 		if (b instanceof GameObject == false) { throw new TypeError("b needs to be a GameObject."); }
@@ -115,15 +114,11 @@ class CollisionSystem extends System {
 			let loc = ast.getLocation();
 			//if distance between player & asteroid < dist
 				//ast.deactivate();
-				//ASH: Shouldnt the a parameter be ploc? If not then change it back to this.player
-				if (CollisionSystem.Distance_check(ploc,loc) == true) {
+				if (CollisionSystem.Distance_check(this.player, ast) == true) {
 					this.player.damage(0);
 					console.log("player damage");
 				}
 		}
-
-
-		//console.log("....")
 	}
 
 
@@ -132,18 +127,14 @@ class CollisionSystem extends System {
 	// Check if any of the player's projectiles are colliding wit an asteroid
 	checkProjectiles_Asteroids() {
 		// get player bullet and asteroid objects
-		let proj = this.pBulletSystem.getBullets();
+		let proj = this.pBulletSystem.getObjects();
 		let ast  = this.asteroidSystem.getObjects();
 		//checks arrays of bullet and asteroid objects
 		for(let p of proj){
 			//gets locations of bullets
-			let prloc = p.getLocation();
 			for(let a of ast){
-				//gets locations of asteroids
-				let aloc = a.getLocation();
-
-				if(CollisionSystem.Distance_check(prloc,aloc) == true){
-					this.asteroidSystem.damage(0);
+				if(CollisionSystem.Distance_check(p, a) == true){
+					a.damage(0);
 					console.log("Asteroid Damage")
 				}
 			}
@@ -173,7 +164,8 @@ class CollisionSystem extends System {
 	checkBossProjectile_Player(){
 		//gets player location and boss projectiles
 		let ploc = this.player.getLocation();
-		let proj = this.bossBullets.getBullets();
+		let boss = this.bossSystem.getObjects()[0];
+		let proj = boss.getBullets();
 
 		//checks boss bullets array to see if boss projectiles are hitting the player
 		//if true, it reports damage to the player and console
