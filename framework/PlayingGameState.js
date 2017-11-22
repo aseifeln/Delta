@@ -43,8 +43,9 @@ class PlayingGameState extends GameState {
 			}
 		});
 
-		let pauseListener = new EventListener(EventFilter.KEYBOARD, function(event) {
-			if (event.getEventEnum() == EventEnum.keyup_p) {
+
+		let pauseListener = new EventListener(EventFilter.GAME, function(event) {
+			if (event.getEventFilter() == EventEnum.GAME_PAUSE) {
 				ENGINE.pauseGame();
 			}
 		});

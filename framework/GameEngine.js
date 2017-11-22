@@ -5,7 +5,6 @@
 	ex playing, paused, menu, game over, etc.
 */
 
-
 class GameEngine {
 	constructor() {
 		this.keyState = new KeyState(); //keeps track of which keys are down
@@ -15,6 +14,11 @@ class GameEngine {
 		this.startState = new StartMenuGameState();
 		this.currentState = this.startState; //the GameEngine's current State
 		this.currentState.onEnter();
+
+	}
+
+	start() {
+		this.eventPublisher.publishEvent(new Event(EventFilter.GAME, EventEnum.GAME_START));
 	}
 
 	start() {

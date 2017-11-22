@@ -24,7 +24,7 @@ const EventEnum = {
 	keydown_s: "keydown_s",
 
 	GAME_EVENT_DOOR_OPEN: "GAME_EVENT_DOOR_OPEN",
-	GAME_START: "GAME_START",
+	GAME_START: "GAME_START", // when game first starts.
 	GAME_WON: "GAME_WON",
 	GAME_PAUSE: "GAME_PAUSE",
 
