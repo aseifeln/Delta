@@ -7,6 +7,8 @@ const CTX = CANVAS.getContext("2d"); //any object can access the context & draw 
 const WIDTH = CANVAS.width;
 const HEIGHT = CANVAS.height;
 
+const AUDIO_ENABLED = false;
+
 //Global game objects (to be defined in main.js)
 let ENGINE = undefined;
 

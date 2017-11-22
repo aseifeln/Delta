@@ -33,7 +33,9 @@ class PlayingGameState extends GameState {
 		this.addSystem(playerSystem);
 		this.addSystem(bossSystem);
 		this.addSystem(levelSystem);
-		this.addSystem(soundSystem);
+		if (AUDIO_ENABLED) {
+			this.addSystem(soundSystem);
+		}
 		// this.addSystem(collisionSystem);
 
 		let gameWonListener = new EventListener(EventFilter.GAME, function(event) {
@@ -45,7 +47,7 @@ class PlayingGameState extends GameState {
 
 
 		let pauseListener = new EventListener(EventFilter.GAME, function(event) {
-			if (event.getEventFilter() == EventEnum.GAME_PAUSE) {
+			if (event.getEventEnum() == EventEnum.keyup_p) {
 				ENGINE.pauseGame();
 			}
 		});
