@@ -33,6 +33,7 @@ class PlayingGameState extends GameState {
 		this.addSystem(playerSystem);
 		this.addSystem(bossSystem);
 		this.addSystem(levelSystem);
+		this.addSystem(soundSystem);
 		// this.addSystem(collisionSystem);
 
 		let gameWonListener = new EventListener(EventFilter.GAME, function(event) {
