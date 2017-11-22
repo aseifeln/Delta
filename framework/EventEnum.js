@@ -25,6 +25,10 @@ const EventEnum = {
 	keydown_s: "keydown_s",
 	keyup_w: "keyup_w",
 	keyup_s: "keyup_s",
+	keyup_a: "keyup_a",
+	keydown_a: "keydown_a",
+	keyup_d: "keydown_d",
+	keydown_d: "keydown_d",
 
 	GAME_EVENT_DOOR_OPEN: "GAME_EVENT_DOOR_OPEN",
 	GAME_START: "GAME_START", // when game first starts.
