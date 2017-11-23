@@ -13,6 +13,7 @@ To run the game, open index.html in a browser.
 
 **_TODO - from last tuesday:_**
 - Finish collision
+	- add width/height & getters to GameObject, and specify width/height of subclasses. use for more accurate collision.
 - Scroller / Asteroids transition
 	- use velocity to slow, instead of abrupt stop
 	- clear curernt asteroids?
