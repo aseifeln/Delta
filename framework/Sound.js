@@ -31,21 +31,7 @@ class SoundSystem extends System {
 		});
 		this.addEventListener(sKeyListener);
 		
-		let aKeyListener = new EventListener(EventFilter.KEYBOARD, function(event) {
-			if (event.getEventEnum() == EventEnum.keydown_a) {
-				instance.playThrusterSound();
-			}
-
-		});
-		this.addEventListener(aKeyListener);
 		
-		let dKeyListener = new EventListener(EventFilter.KEYBOARD, function(event) {
-			if (event.getEventEnum() == EventEnum.keydown_d) {
-				instance.playThrusterSound();
-			}
-
-		});
-		this.addEventListener(dKeyListener);
 
 		let gKeyListener = new EventListener(EventFilter.KEYBOARD, function(event) {
 			if (event.getEventEnum() == EventEnum.keydown_g) {
