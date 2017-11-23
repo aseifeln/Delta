@@ -19,8 +19,8 @@ function setup() {
 		ENGINE.receiveRawKeyEvent(event, false);
 	});
 
-	ENGINE.start();
 	TestSuite.runTests();
+	ENGINE.start();
 	window.requestAnimationFrame(update); //starts the game update loop
 }
 

@@ -5,7 +5,7 @@
 			-setup new game
 			-enter Play mode
 		-exit
-	
+
 */
 class StartMenuGameState extends GameState {
 	constructor() {
@@ -19,6 +19,8 @@ class StartMenuGameState extends GameState {
 			}
 		});
 		this.registerEventListener(startListener);
+
+		this.addSystem(new SoundSystem());
 	}
 
 	onEnter() {

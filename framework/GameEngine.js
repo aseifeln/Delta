@@ -21,11 +21,6 @@ class GameEngine {
 		this.eventPublisher.publishEvent(new Event(EventFilter.GAME, EventEnum.GAME_START));
 	}
 
-	start() {
-		this.eventPublisher.publishEvent(new Event(EventFilter.GAME, EventEnum.GAME_START));
-	}
-
-	// Future: implement pausing
 	pauseGame() {
 		this.enterState(this.pausedState);
 	}
@@ -38,6 +33,7 @@ class GameEngine {
 
 	//setup a new game by creating new GameStates (discard old ones)
 	setupNewGame() {
+		//TODO clear events in queue
 		this.keyState.clearKeys();
 		this.playingState = new PlayingGameState();
 		this.currentState = this.playingState; //the GameEngine's current State

@@ -126,13 +126,13 @@ class TestSuite {
 		// o.publishEvent(new Event()); //TODO dependent on engine.
 
 		//test damage
-		assert(100 == o.getLife()); //full hp
-		o.damage(50); //damage -50 hp
-		assert(50 == o.getLife()); //half hp (50)
-		assert(true == o.getIsActive()); //still active
-		o.damage(50); //damage remaining 50
-		assert(0 == o.getLife()); //half hp (50)
-		assert(false == o.getIsActive()); //object destroyed
+		// assert(100 == o.getLife()); //full hp
+		// o.damage(50); //damage -50 hp
+		// assert(50 == o.getLife()); //half hp (50)
+		// assert(true == o.getIsActive()); //still active
+		// o.damage(50); //damage remaining 50
+		// assert(0 == o.getLife()); //half hp (50)
+		// assert(false == o.getIsActive()); //object destroyed
 
 		/*
 			getVelocity() { return this.velocity; }
@@ -219,7 +219,7 @@ class TestSuite {
 		let count2 = 0;
 		let l2 = new EventListener(EventFilter.OTHER, function(e) {
 			count2 = 1;
-		});	
+		});
 
 		//add an event listener to the map
 		//@param l: an EventListener
@@ -241,9 +241,9 @@ class TestSuite {
 
 		// clearEvents() //clear all events from the queue
 	}
-	
+
 	static test_levelPresets() {
-		
+
 		// console.log(LevelPresets.getPresets());
 		// console.log(LevelPresets2.getLevels());
 		// test getPoints()
@@ -253,11 +253,11 @@ class TestSuite {
 		assert(pts[0].getY() == 2);
 		assert(pts[1].getX() == 3);
 		assert(pts[1].getY() == 4);
-		
-		
+
+
 		// let m = Mode["SCROLLER"];
 		// console.log(m);
-		
+
 		//read chars until tab, new line, or index > length. return
 		/*
 		array containing the index of the last read character, and the output string.
@@ -273,12 +273,12 @@ class TestSuite {
 		// let input = "a\tb\tc\nd\te\tf\t";
 		// let letters = new Array();
 		// let stop = false;
-		
+
 		// while(!stop) {
 		// 	let result = getNextColumn(i, input);
 		// 	i = result[0];
 		// 	letters.push(result[1]);
-			
+
 		// 	let c = input[i];
 		// 	if (i < input.length) {
 		// 		if (c == "\t") { i++; } //same object, next column
@@ -289,6 +289,6 @@ class TestSuite {
 		// 	}
 		// }
 		// assert(i == input.length);
-		
+
 	}
 }
