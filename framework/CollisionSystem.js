@@ -17,7 +17,7 @@ class CollisionSystem extends System {
 		this.asteroidSystem = asteroidSystem;
 		this.pBulletSystem = pBulletSystem; //player bullet system
 		this.bossSystem = bossSystem;
-		
+
 
 	}
 
@@ -147,10 +147,7 @@ class CollisionSystem extends System {
 		}
 	}
 
-
-
-	//NOTE example method for if an asteroid is hit
-	damageAsteroid(asteroid, projectile) {
-		asteroid.damage(projectile.getDamage);
-	}
+	// damageAsteroid(asteroid, projectile) {
+	// 	asteroid.damage(projectile.getDamage);
+	// }
 }
