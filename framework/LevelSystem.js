@@ -107,7 +107,7 @@ class Level {
 		if (bossSpawner instanceof ObjectSpawner) {
 			this.spawners.push(bossSpawner);
 		}
-		
+
 		if (this.spawners.length == 0) {
 			console.warn("Warning: no ObjectSpawners were initialized.");
 		}
@@ -146,7 +146,7 @@ class Level {
 
 // Class that updates and manages Levels. Each level contains data for spawning asteroids & enemies
 class LevelSystem extends System {
-	constructor(levelPresetsSupplier, playerSystem, asteroidSystem, enemySystem, bossSystem, bgSystem) {
+	constructor(levelPresets, playerSystem, asteroidSystem, enemySystem, bossSystem, bgSystem) {
 		super();
 		this.systems = new Array();
 		this.asteroidSystem = asteroidSystem;
@@ -154,11 +154,11 @@ class LevelSystem extends System {
 		this.playerSystem = playerSystem;
 		this.player = playerSystem.getPlayer();
 		this.bgSystem = bgSystem;
-		
+
 		this.bossSystem = bossSystem;
 
 		this.score = 0;
-		this.levels = levelPresetsSupplier();
+		this.levels = levelPresets;
 		this.currentLevel = this.levels[0];
 		this.levelCount = 0; //levels[] index
 		this.levelCondition = undefined;
