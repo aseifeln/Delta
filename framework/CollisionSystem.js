@@ -24,6 +24,9 @@ class CollisionSystem extends System {
 	update() {
 		this.checkPlayer_Asteroids();
 		this.checkProjectiles_Asteroids();
+		// this.checkBossCollision_Player();
+		// this.checkBossProjectile_Player();
+		this.checkProjectiles_Boss();
 	}
 
 	onEnter() {}
@@ -62,7 +65,7 @@ class CollisionSystem extends System {
 				//ast.deactivate();
 				if (CollisionSystem.Distance_check(this.player, ast) == true) {
 					this.player.damage(0);
-					console.log("player damage");
+					//TODO do damge, game over screen if player dies
 				}
 		}
 	}
@@ -80,8 +83,9 @@ class CollisionSystem extends System {
 			//gets locations of bullets
 			for(let a of ast){
 				if(CollisionSystem.Distance_check(p, a) == true){
-					a.damage(0);
-					console.log("Asteroid Damage")
+					// a.damage(0);
+					a.destroy();
+					p.destroy();
 				}
 			}
 		}
@@ -101,7 +105,7 @@ class CollisionSystem extends System {
 
 			if(CollisionSystem.Distance_check(ploc,bloc) == true){
 				this.player.damage(0);
-				console.log("player damage");
+				//TODO do damge, game over screen if player dies
 			}
 		}
 	}
@@ -120,7 +124,7 @@ class CollisionSystem extends System {
 			let loc = p.getLocation();
 			if(CollisionSystem.Distance_check(ploc,loc) == true){
 				this.player.damage(0);
-				console.log("player damage");
+				//TODO do damge, game over screen if player dies
 			}
 		}
 	}
@@ -128,20 +132,18 @@ class CollisionSystem extends System {
 	//Check player bullets hitting boss guy
 	checkProjectiles_Boss(){
 		//gets player bullets and boss objects and their locations
-		let proj = this.pBulletSystem.getBullets();
+		let proj = this.pBulletSystem.getObjects();
 		let boss = this.bossSystem.getObjects();
 
 		//checks array of bullets and boss objects to see if any bullet collides with a boss
 		for(let p of proj){
 			//gets location of projectile
-			let prloc = p.getLocation();
 			for(let b of boss){
 				// gets boss object location
-				let bloc = b.getLocation();
-
-				if(CollisionSystem.Distance_check(prloc,bloc) == true){
-					this.bossSystem.damage(0);
-					console.log("boss damage");
+				if(CollisionSystem.Distance_check(p,b) == true){
+					b.damage(10);
+					p.destroy();
+					console.log("boss dam");
 				}
 			}
 		}
