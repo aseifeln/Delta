@@ -146,7 +146,7 @@ class Level {
 
 // Class that updates and manages Levels. Each level contains data for spawning asteroids & enemies
 class LevelSystem extends System {
-	constructor(levelPresetsSupplier, playerSystem, asteroidSystem, enemySystem, bossSystem, bgSystem) {
+	constructor(levelPresets, playerSystem, asteroidSystem, enemySystem, bossSystem, bgSystem) {
 		super();
 		this.systems = new Array();
 		this.asteroidSystem = asteroidSystem;
@@ -157,7 +157,7 @@ class LevelSystem extends System {
 		this.bossSystem = bossSystem;
 
 		this.score = 0;
-		this.levels = levelPresetsSupplier();
+		this.levels = levelPresets;
 		this.currentLevel = this.levels[0];
 		this.levelCount = 0; //levels[] index
 		this.levelCondition = undefined;

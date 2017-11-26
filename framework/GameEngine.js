@@ -40,11 +40,13 @@ class GameEngine {
 		this.currentState.onEnter();
 	}
 
+	//called every frame
 	update() {
 		//update the current GameState, which will update each of its systems.
 		this.currentState.update();
 	}
 
+	//called every frame afte update()
 	render() {
 		//render the current GameState, which will render each of its systems.
 		this.currentState.render();

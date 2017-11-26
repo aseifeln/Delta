@@ -9,6 +9,21 @@ To run the game, open index.html in a browser.
 - (testing) asteroids destroyed automatically when offscreen (instead of by player); game automatically progress through levels.
 - basic UI
 - player rotation depends on current level mode (scroller or asteroid)
+- scrolling background
+
+**_TODO - from last tuesday:_**
+- Finish collision
+	- add width/height & getters to GameObject, and specify width/height of subclasses. use for more accurate collision.
+- Scroller / Asteroids transition
+	- use velocity to slow, instead of abrupt stop
+	- clear curernt asteroids?
+- Background
+	- use tileable image
+- Game over
+	- game won / lose screen
+	- or endless mode?
+- Enemies - not enough time to work on?
+
 
 
 **_TODO - main todo's:_**
@@ -24,6 +39,7 @@ To run the game, open index.html in a browser.
 	- tests & engine - amanda
 - start menu, game over menu, scoreboard, prev round scores
 - keep player in bounds/on screen, add stayInBounds function to player
+- UI - player health
 - UI - fix score positioning
 
 **_TODO - refinement:_**
