@@ -76,8 +76,8 @@ class CollisionSystem extends System {
 		for(let p of proj){
 			for(let a of ast){
 				if(CollisionSystem.Distance_check(p, a) == true){
-					a.damage(50);
-					//a.destroy();
+					//a.damage(50);
+					a.destroy();
 					p.destroy();
 				}
 			}
