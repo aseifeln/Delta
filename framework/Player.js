@@ -60,19 +60,20 @@ class Player extends GameObject {
 
 		this.scrollerUpdate = function() {
 			this.sprite.update();
-			if (ENGINE.getKeyState().getKey('w')) {
+			//console.log(this.getX());
+			if (ENGINE.getKeyState().getKey('w') && this.getY()>50) {
 				this.move(0, -this.speed);
 				this.sprite.selectForward();
 			}
-			if (ENGINE.getKeyState().getKey('a')) {
+			if (ENGINE.getKeyState().getKey('a') && this.getX()>30) {
 				this.move(-this.speed, 0);
 				// this.sprite.selectLeft();
 			}
-			if (ENGINE.getKeyState().getKey('s')) {
+			if (ENGINE.getKeyState().getKey('s') && this.getY()<550) {
 				this.move(0, this.speed);
 				this.sprite.selectBackward();
 			}
-			if (ENGINE.getKeyState().getKey('d')) {
+			if (ENGINE.getKeyState().getKey('d') && this.getX()<870) {
 				this.move(this.speed, 0);
 				// this.sprite.selectRight();
 			}
@@ -96,6 +97,18 @@ class Player extends GameObject {
 				this.angle += this.rotateSpeed;
 				this.rotate(this.angle);
 				this.sprite.selectRight();
+			}
+			if (this.getY()>600){
+				this.setLocation(this.getX(), 0);
+			}
+			if (this.getY()<0){
+				this.setLocation(this.getX(), 600);
+			}
+			if (this.getX()>900){
+				this.setLocation(0, this.getY());
+			}
+			if (this.getX()<0){
+				this.setLocation(900, this.getY());
 			}
 		}
 
