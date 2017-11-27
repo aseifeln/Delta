@@ -107,7 +107,7 @@ class Level {
 		if (bossSpawner instanceof ObjectSpawner) {
 			this.spawners.push(bossSpawner);
 		}
-
+		
 		if (this.spawners.length == 0) {
 			console.warn("Warning: no ObjectSpawners were initialized.");
 		}
@@ -146,7 +146,7 @@ class Level {
 
 // Class that updates and manages Levels. Each level contains data for spawning asteroids & enemies
 class LevelSystem extends System {
-	constructor(levelPresets, playerSystem, asteroidSystem, enemySystem, bossSystem, bgSystem) {
+	constructor(levelPresetsSupplier, playerSystem, asteroidSystem, enemySystem, bossSystem, bgSystem) {
 		super();
 		this.systems = new Array();
 		this.asteroidSystem = asteroidSystem;
@@ -154,10 +154,11 @@ class LevelSystem extends System {
 		this.playerSystem = playerSystem;
 		this.player = playerSystem.getPlayer();
 		this.bgSystem = bgSystem;
+		
 		this.bossSystem = bossSystem;
 
 		this.score = 0;
-		this.levels = levelPresets;
+		this.levels = levelPresetsSupplier();
 		this.currentLevel = this.levels[0];
 		this.levelCount = 0; //levels[] index
 		this.levelCondition = undefined;
@@ -281,6 +282,13 @@ const Images = {
 		wOffset: 51/2,
 		hOffset: 49/2,
 	},
+	asteroid_broken: {
+		image: new Image(),
+		width: 51,
+		height: 49,
+		wOffset: 51/2,
+		hOffset: 49/2,
+	},
 	alien: {
 		image: new Image(),
 		width: 51,
@@ -290,6 +298,7 @@ const Images = {
 	}
 }
 Images.asteroid.image.src = "assets/asteroid.png";
+Images.asteroid_broken.image.src = "assets/asteroid_broken.png";
 Images.alien.image.src = "assets/alien.png";
 
 //Placeholder asteroid class, black rotating squares.
@@ -298,14 +307,35 @@ class TestAsteroid extends GameObject {
 		super(points);
 		this.rotSpd = Math.random() * (Math.PI/30);
 		this.image = Images.asteroid;
+
+		
 	}
 
 	update() {
+		this.life -= 0.5;
+		//console.log(this.life, 'life');
+		if(this.life<-50){
+			this.destroy();
+		}
+
+		if(this.life==0){
+			console.log('split and create new');
+		}
+
+		if(this.life>0){
+			this.image = Images.asteroid;
+		}
+		else {
+			this.image = Images.asteroid_broken;
+		}
+
 		this.transform.getLocation().addPoint(this.velocity);
 		this.transform.setRotation(this.transform.getRotation() + this.rotSpd);
 		if (this.isOffscreen()) {
-			// this.destroy(); //NOTE testing - call deactivate() instead.
-			this.deactivate();
+
+
+			//this.destroy(); //NOTE testing - call deactivate() instead.
+			// this.deactivate();
 		}
 	}
 
@@ -318,16 +348,70 @@ class TestAsteroid extends GameObject {
 	}
 }
 
+
+//Placeholder asteroid class, black rotating squares.
+class TestAlien extends GameObject {
+	constructor(points = 10) {
+		super(points);
+		//this.rotSpd = Math.random() * (Math.PI/30);
+		this.image = Images.alien;
+		this.alienBulletSystem = new EnemyBulletSystem();
+		
+		this.phase1Shoot = 60;
+	}
+
+	update() {
+		// console.log(this.velocity);
+		// debugger;
+		this.transform.getLocation().addPoint(this.velocity);
+		this.transform.setRotation(this.transform.getRotation() + this.rotSpd);
+		if (this.isOffscreen()) {
+			this.destroy(); //NOTE testing - call deactivate() instead.
+			// this.deactivate();
+		}
+		//debugger;
+		this.phase1();
+		this.alienBulletSystem.update();
+	}
+
+	render() {
+		CTX.save();
+		this.alienBulletSystem.render();
+		CTX.translate(this.transform.getX(), this.transform.getY());
+		CTX.rotate(this.transform.getRotation());
+		CTX.drawImage(this.image.image, -this.image.wOffset, -this.image.hOffset);
+		CTX.restore();
+	}
+
+
+	phase1() {
+		//debugger;
+		//if out of bounds switch direction
+		//console.log('calling phase1');
+		// if(this.transform.getX() > this.eastBuffer-this.sprite.frameWidth || this.transform.getX() < this.westBuffer+200){
+		// 	this.moveSpeed *=-1;
+		// }
+		this.phase1Move++;
+		//this.transform.getLocation().add(this.moveSpeed, Math.sin(this.phase1Move*0.5*Math.PI/25));//move ship in wave style
+		this.phase1Shoot --;
+		if(this.phase1Shoot <0){
+			//console.log('calling bullet');
+			this.alienBulletSystem.spawnBullet(this.getX(), this.getY(),180, 5 + this.velocity.y, Colors.RED);
+			this.phase1Shoot = 60;
+			//this.life--; //REMOVE THIS ONCE COLLISION WORKS JUST TESTING PHASES
+		}
+	}
+}
+
+
 //Placeholder enemy class, blue squares.
-class TestEnemy extends TestAsteroid {
+class TestEnemy extends TestAlien {
 	constructor(points = 10) {
 		super(points);
 		this.rotSpd = 0;
-		this.image = Images.alien;
-		this.isActive = false; //NOTE enemy ai not implemented, remove immdeiately.
-		this.transform.setLocation(-60, -60); //move offscreen for presentation
+		//this.image = Images.alien;
 	}
 	render() {
-		CTX.drawImage(this.image.image, this.getX() -this.image.wOffset, this.getY() -this.image.hOffset);
+		//CTX.drawImage(this.image.image, -this.image.wOffset, -this.image.hOffset);
 	}
 }
