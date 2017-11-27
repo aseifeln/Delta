@@ -326,6 +326,6 @@ class TestEnemy extends TestAsteroid {
 		this.image = Images.alien;
 	}
 	render() {
-		CTX.drawImage(this.image.image, -this.image.wOffset, -this.image.hOffset);
+		//CTX.drawImage(this.image.image, -this.image.wOffset, -this.image.hOffset);
 	}
 }

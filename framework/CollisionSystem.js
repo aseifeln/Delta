@@ -65,13 +65,9 @@ class CollisionSystem extends System {
 				//ast.deactivate();
 				if (CollisionSystem.Distance_check(this.player, ast) == true) {
 					this.player.damage(0);
-					//TODO do damge, game over screen if player dies
 				}
 		}
 	}
-
-
-
 
 	// Check if any of the player's projectiles are colliding wit an asteroid
 	checkProjectiles_Asteroids() {
