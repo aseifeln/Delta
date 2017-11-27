@@ -39,7 +39,6 @@ To run the game, open index.html in a browser.
 	- tests & engine - amanda
 - start menu, game over menu, scoreboard, prev round scores
 - keep player in bounds/on screen, add stayInBounds function to player
-- UI - player health
 - UI - fix score positioning
 
 **_TODO - refinement:_**

@@ -8,6 +8,7 @@ const EventFilter = {
 	KEYBOARD: "KEYBOARD",
 	COLLISION: "COLLISION",
 	DESTROY: "DESTROY", //when an object (asteroid, enemy, player) is destroyed
+	PLAYER: "PLAYER",
 	GAME: "GAME",
 	OTHER: "OTHER",
 }

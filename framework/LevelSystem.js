@@ -324,8 +324,10 @@ class TestEnemy extends TestAsteroid {
 		super(points);
 		this.rotSpd = 0;
 		this.image = Images.alien;
+		this.isActive = false; //NOTE enemy ai not implemented, remove immdeiately.
+		this.transform.setLocation(-60, -60); //move offscreen for presentation
 	}
 	render() {
-		//CTX.drawImage(this.image.image, -this.image.wOffset, -this.image.hOffset);
+		CTX.drawImage(this.image.image, this.getX() -this.image.wOffset, this.getY() -this.image.hOffset);
 	}
 }
