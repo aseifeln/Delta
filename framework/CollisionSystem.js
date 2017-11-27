@@ -7,7 +7,7 @@
 class CollisionSystem extends System {
 	// @param player: The player
 	// @param asteroids: An array of asteroids
-	constructor(playerSystem, asteroidSystem, pBulletSystem, bossSystem) {
+	constructor(playerSystem, asteroidSystem, enemySystem, pBulletSystem, bossSystem) {
 		if (playerSystem instanceof PlayerSystem == false || asteroidSystem instanceof GameObjectSystem == false) { throw new Error("Invalid arguments"); }
 		super();
 
@@ -15,6 +15,7 @@ class CollisionSystem extends System {
 		this.playerSystem = playerSystem;
 		this.player = playerSystem.getPlayer();
 		this.asteroidSystem = asteroidSystem;
+		this.enemySystem = enemySystem;
 		this.pBulletSystem = pBulletSystem; //player bullet system
 		this.bossSystem = bossSystem;
 
@@ -23,10 +24,16 @@ class CollisionSystem extends System {
 
 	update() {
 		this.checkPlayer_Asteroids();
+		this.checkPlayer_enemies();
 		this.checkProjectiles_Asteroids();
-		// this.checkBossCollision_Player();
-		// this.checkBossProjectile_Player();
-		this.checkProjectiles_Boss();
+		this.checkProjectiles_enemy();
+		this.checkEnemyProjectile_Player();
+		//TODO enemy collides w player
+		if (this.bossSystem.getObjects()[0] != undefined) { //check if boss is present
+		// 	// this.checkBossCollision_Player();
+		// 	// this.checkBossProjectile_Player();
+		// 	// this.checkProjectiles_Boss();
+		}
 	}
 
 	onEnter() {}
@@ -35,7 +42,7 @@ class CollisionSystem extends System {
 
 	//check if GameObjects a and b are colliding.
 	//@param a, b: pass 2 GameObjects.
-	static Distance_check(a, b){
+	static Distance_check(a, b) {
 		if (a instanceof GameObject == false) { throw new TypeError("a needs to be a GameObject."); }
 		if (b instanceof GameObject == false) { throw new TypeError("b needs to be a GameObject."); }
 		// getting x and y coordinates of each object
@@ -58,16 +65,25 @@ class CollisionSystem extends System {
 		let asteroids = this.asteroidSystem.getObjects(); //returns an array of asteroids
 		for (let ast of asteroids) {
 			//if distance between player & asteroid < dist
-				//ast.deactivate();
-				if (CollisionSystem.Distance_check(this.player, ast) == true) {
-					this.player.damage(10);
-					ast.deactivate();
-					//TODO do damge, game over screen if player dies
-				}
+			if (CollisionSystem.Distance_check(this.player, ast) == true) {
+				this.player.damage(10);
+				ast.deactivate();
+			}
+		}
+	}
+	
+	checkPlayer_enemies() {
+		let enemies = this.enemySystem.getObjects(); //returns an array of asteroids
+		for (let e of enemies) {
+			//if distance between player & asteroid < dist
+			if (CollisionSystem.Distance_check(this.player, e) == true) {
+				this.player.damage(10);
+				e.deactivate();
+			}
 		}
 	}
 
-	// Check if any of the player's projectiles are colliding wit an asteroid
+	// Check if any of the player's projectiles are colliding with an asteroid
 	checkProjectiles_Asteroids() {
 		// get player bullet and asteroid objects
 		let proj = this.pBulletSystem.getObjects();
@@ -83,6 +99,22 @@ class CollisionSystem extends System {
 			}
 		}
 	}
+	
+	// Check if any of the player's projectiles are colliding with an alien/enemy
+	checkProjectiles_enemy() {
+		let proj = this.pBulletSystem.getObjects();
+		let enemies  = this.enemySystem.getObjects();
+		for(let p of proj){
+			for(let e of enemies){
+				if(CollisionSystem.Distance_check(p, e) == true){
+					//e.damage(50);
+					e.destroy();
+					p.destroy();
+				}
+			}
+		}
+	}
+	
 
 	//Checks if the player collides with the boss
 	checkBossCollision_Player(){
@@ -90,7 +122,6 @@ class CollisionSystem extends System {
 		for(let b of boss){
 			if(CollisionSystem.Distance_check(this.player, boss) == true){
 				this.player.damage(0);
-				//TODO do damge, game over screen if player dies
 			}
 		}
 	}
@@ -98,18 +129,27 @@ class CollisionSystem extends System {
 	//checks to see if the boss's bullets hit the player.
 	checkBossProjectile_Player(){
 		//gets player location and boss projectiles
-		let ploc = this.player.getLocation();
 		let boss = this.bossSystem.getObjects()[0];
 		let proj = boss.getBullets();
 
-		//checks boss bullets array to see if boss projectiles are hitting the player
-		//if true, it reports damage to the player and console
 		for(let p of proj){
-			//gets player projectile location and places it as a param
-			let loc = p.getLocation();
-			if(CollisionSystem.Distance_check(ploc, loc) == true){
-				this.player.damage(0);
-				//TODO do damge, game over screen if player dies
+			if(CollisionSystem.Distance_check(p, this.player) == true){
+				this.player.damage(10);
+			}
+		}
+	}
+	
+	//checks to see if bullets from enemies hit the player.
+	checkEnemyProjectile_Player(){
+		let enemies = this.enemySystem.getObjects();
+		
+		for(let e of enemies){
+			for (let b of e.getBullets()) {
+				if(CollisionSystem.Distance_check(b, this.player) == true){
+					this.player.damage(10);
+					b.deactivate();
+				}
+				
 			}
 		}
 	}

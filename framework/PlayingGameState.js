@@ -15,8 +15,7 @@ class PlayingGameState extends GameState {
 		let asteroidSystem = new GameObjectSystem(); //updates and renders asteriods
 		let enemySystem = new GameObjectSystem(); //updates and renders enemies
 		let bossSystem = new GameObjectSystem();
-		// let levelSystem = new LevelSystem(LevelPresets.getPresets, playerSystem, asteroidSystem, enemySystem, bossSystem, bgSystem); // levels, playerSystem, asteroidSystem, enemySystem, bossSystem)
-		let collisionSystem = new CollisionSystem(playerSystem, asteroidSystem, playerBulletSystem, bossSystem); //sample collision system
+		let collisionSystem = new CollisionSystem(playerSystem, asteroidSystem, enemySystem, playerBulletSystem, bossSystem); //sample collision system
 		let levelSystem = new LevelSystem(LevelPresets2.getLevels(), playerSystem, asteroidSystem, enemySystem, bossSystem, bgSystem); // levels, playerSystem, asteroidSystem, enemySystem, bossSystem)
 		//transitionSystem = new System();
 

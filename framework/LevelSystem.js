@@ -50,7 +50,7 @@ class ObjectSpawner {
 		this.numPerSpawnRange = numPerSpawnRange; // a number specifying the number of objects to spawn each spawn interval.
 		this.maxNum = maxNum; //maximum number of objects that can be spawned. set to -1 for unlimited.
 		this.totalSpawned = 0; //total number spawned so far
-		this.maxReached = false; //flag, true if totalSpawned reaches maxNum
+		this.maxReached = maxNum > 0  || maxNum == -1? false : true; //flag, true if totalSpawned reaches maxNum
 		this.nextSpawn = this.spawnFreqRange.randInt(); //countdown timer till next spawn
 		this.isReady = false; //flag, true if countdown timer has reached 0 and an object has been spawned.
 		this.objBuffer = new Array(); //array for holding spawned objects. used by LevelManager
@@ -372,6 +372,9 @@ class Alien extends GameObject {
 			this.phase1Shoot = 60;
 			//this.life--; //REMOVE THIS ONCE COLLISION WORKS JUST TESTING PHASES
 		}
+	}
+	getBullets() {
+		return this.alienBulletSystem.getObjects();
 	}
 }
 

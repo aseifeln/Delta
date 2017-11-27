@@ -101,6 +101,7 @@ const LevelPresets2 = {
 	//formatted text from level_presets.tsv containing level data.
 	levelStr: "" +
 	"1	SCROLLER	(-0.5, 0.5), (2, 5)	100	-1	(20, 50), (1, 1)	0	(1, 1), (0, 0)\n" +
+	// "2	SCROLLER	(-0.5, 0.5), (2, 5)	200	-1	(20, 45), (1, 1)	3	(10, 10), (1, 1)\n" +
 	"2	SCROLLER	(-0.5, 0.5), (2, 5)	200	-1	(20, 45), (1, 1)	0	(1, 1), (0, 0)\n" +
 	"3	SCROLLER	(-0.6, 0.6), (2, 6)	400	-1	(18, 45), (1, 1)	0	(1, 1), (0, 0)\n" +
 	"4	SCROLLER	(-0.6, 0.6), (2, 6)	600	-1	(15, 40), (1, 1)	0	(1, 1), (0, 0)\n" +
@@ -117,13 +118,13 @@ const LevelPresets2 = {
 	asteroid_spawnAreas: [
 		new Rectangle(-80, -80, WIDTH + 40, 50), //north
 		new Rectangle(-80, HEIGHT + 40, WIDTH + 40, 50), //south
-		new Rectangle(-80, -80, 50, HEIGHT + 40), //east
+		new Rectangle(-80, -80, 50, HEIGHT + 40), //west
 		new Rectangle(WIDTH + 40, -80, 50, HEIGHT + 40), //east
 	],
 }
 
 
-//return a new object for the SCROLLER mode
+//return a new alien for the SCROLLER mode
 function make_scroll_alien() {
 	let obj = new Alien();
 	const x = WIDTH/2 + ((WIDTH/2 + 50)* randSign());
@@ -142,8 +143,6 @@ function make_scroll_alien() {
 	obj.setVelocity(dx, dy);
 	return obj;
 }
-
-
 
 //return a new Asteroid for the SCROLLER mode
 function make_scroll_ast(dxRange, dyRange) {
