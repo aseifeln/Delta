@@ -46,9 +46,16 @@ class PlayingGameState extends GameState {
 			}
 		});
 
+		let gameOverListener = new EventListener(EventFilter.PLAYER, function(event) {
+			if (event.getEventEnum() == EventEnum.PLAYER_DIE) {
+				// ENGINE.gameOver();
+				console.log("player ded");
+			}
+		});
 
 		this.registerEventListener(gameWonListener);
 		this.registerEventListener(pauseListener);
+		this.registerEventListener(gameOverListener);
 	}
 
 	update() {

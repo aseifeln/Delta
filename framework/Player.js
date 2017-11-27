@@ -116,6 +116,10 @@ class Player extends GameObject {
 		this.updateMode = this.asteroidUpdate;
 	}
 
+	disableMovement() {
+		this.updateMode = function() {};
+	}
+
 	update() {
 		this.updateMode();
 	}
