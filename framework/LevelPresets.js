@@ -62,10 +62,7 @@ const LevelPresets2 = {
 			// const e_supplier = function() { return new TestEnemy(); };
 			
 			let e_supplier = function() {
-				let pts = getPoints(dx_dy);
-				dxRange = pts[0];
-				dyRange = pts[1];
-				return make_scroll_obj(new Alien(), dxRange, dyRange);
+				return make_scroll_alien();
 			};
 			
 			let bossSpawner = undefined;
@@ -127,15 +124,26 @@ const LevelPresets2 = {
 
 
 //return a new object for the SCROLLER mode
-function make_scroll_obj(obj, dxRange, dyRange) {
-	const x = Mode.SCROLLER.ast_start_x_range.rand();
-	const y = Mode.SCROLLER.ast_start_y_range.rand();
+function make_scroll_alien() {
+	let obj = new Alien();
+	const x = WIDTH/2 + ((WIDTH/2 + 50)* randSign());
+	const y = 20;
 	obj.setLocation(x, y);
-	const dx = dxRange.rand();
-	const dy = dyRange.rand();
+	let dx = undefined;
+	let dy = undefined;
+	let spd = 2;
+	if (x < 0) {
+		dx = spd;
+		dy = 0;
+	} else {
+		dx = -spd;
+		dy = 0;
+	}
 	obj.setVelocity(dx, dy);
 	return obj;
 }
+
+
 
 //return a new Asteroid for the SCROLLER mode
 function make_scroll_ast(dxRange, dyRange) {

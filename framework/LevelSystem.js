@@ -304,7 +304,6 @@ class TestAsteroid extends GameObject {
 		this.transform.getLocation().addPoint(this.velocity);
 		this.transform.setRotation(this.transform.getRotation() + this.rotSpd);
 		if (this.isOffscreen()) {
-			// this.destroy(); //NOTE testing - call deactivate() instead.
 			this.deactivate();
 		}
 	}
@@ -328,16 +327,21 @@ class Alien extends GameObject {
 		this.phase1Shoot = 60;
 	}
 
+	//alien moves side to side across screen, and slowly moves downward.
 	update() {
-		// console.log(this.velocity);
-		// debugger;
 		this.transform.getLocation().addPoint(this.velocity);
 		this.transform.setRotation(this.transform.getRotation() + this.rotSpd);
 		if (this.isOffscreen()) {
-			this.destroy(); //NOTE testing - call deactivate() instead.
-			// this.deactivate();
+			this.deactivate();
 		}
-		//debugger;
+		if (this.getX() - 50 <= 0) {
+			this.getVelocity().set(this.getVelocity().getX() * -1, this.getVelocity().getY());
+			this.setLocation(0 + 50, this.getY() + 20);
+		}
+		if (this.getX() + 50 >= WIDTH) {
+			this.getVelocity().set(this.getVelocity().getX() * -1, this.getVelocity().getY());
+			this.setLocation(WIDTH - 50, this.getY() + 20);
+		}
 		this.phase1();
 		this.alienBulletSystem.update();
 	}
