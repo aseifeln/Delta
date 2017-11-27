@@ -154,7 +154,6 @@ class LevelSystem extends System {
 		this.playerSystem = playerSystem;
 		this.player = playerSystem.getPlayer();
 		this.bgSystem = bgSystem;
-
 		this.bossSystem = bossSystem;
 
 		this.score = 0;
@@ -305,8 +304,8 @@ class TestAsteroid extends GameObject {
 		this.transform.getLocation().addPoint(this.velocity);
 		this.transform.setRotation(this.transform.getRotation() + this.rotSpd);
 		if (this.isOffscreen()) {
-			this.destroy(); //NOTE testing - call deactivate() instead.
-			// this.deactivate();
+			// this.destroy(); //NOTE testing - call deactivate() instead.
+			this.deactivate();
 		}
 	}
 

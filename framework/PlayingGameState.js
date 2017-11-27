@@ -15,14 +15,9 @@ class PlayingGameState extends GameState {
 		let enemySystem = new GameObjectSystem(); //updates and renders enemies
 		let bossSystem = new GameObjectSystem();
 		// let levelSystem = new LevelSystem(LevelPresets.getPresets, playerSystem, asteroidSystem, enemySystem, bossSystem, bgSystem); // levels, playerSystem, asteroidSystem, enemySystem, bossSystem)
+		let collisionSystem = new CollisionSystem(playerSystem, asteroidSystem, playerBulletSystem, bossSystem); //sample collision system
 		let levelSystem = new LevelSystem(LevelPresets2.getLevels(), playerSystem, asteroidSystem, enemySystem, bossSystem, bgSystem); // levels, playerSystem, asteroidSystem, enemySystem, bossSystem)
-
-
 		//transitionSystem = new System();
-		// let collisionSystem = new CollisionSystem(playerSystem, asteroidSystem); //sample collision system
-			//checks and handles collisions
-			//call damage() on game objects if they have been hit
-			//call destroy() on game objects if they have been destroyed
 
 		//Add your System to the main playingState
 		//eventlisteners belonging to each system will be automaticlaly registered with this state.
@@ -34,7 +29,7 @@ class PlayingGameState extends GameState {
 		this.addSystem(playerSystem);
 		this.addSystem(bossSystem);
 		this.addSystem(levelSystem);
-		// this.addSystem(collisionSystem);
+		this.addSystem(collisionSystem);
 
 		let gameWonListener = new EventListener(EventFilter.GAME, function(event) {
 			if (event.getEventEnum() == EventEnum.GAME_WON) {
