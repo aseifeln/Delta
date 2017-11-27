@@ -341,7 +341,11 @@ class TestAsteroid extends GameObject {
 		CTX.save();
 		CTX.translate(this.transform.getX(), this.transform.getY());
 		CTX.rotate(this.transform.getRotation());
-		CTX.drawImage(this.image.image, -this.image.wOffset, -this.image.hOffset);
+		if (this.life > 50) {
+			CTX.drawImage(this.image.image, -this.image.wOffset, -this.image.hOffset);
+		} else {
+			CTX.drawImage(this.image.image, -this.image.wOffset/2, -this.image.hOffset/2);
+		}
 		CTX.restore();
 	}
 }
