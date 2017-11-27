@@ -318,6 +318,59 @@ class TestAsteroid extends GameObject {
 	}
 }
 
+class Alien extends GameObject {
+	constructor(points = 10) {
+		super(points);
+		//this.rotSpd = Math.random() * (Math.PI/30);
+		this.image = Images.alien;
+		this.alienBulletSystem = new EnemyBulletSystem();
+		
+		this.phase1Shoot = 60;
+	}
+
+	update() {
+		// console.log(this.velocity);
+		// debugger;
+		this.transform.getLocation().addPoint(this.velocity);
+		this.transform.setRotation(this.transform.getRotation() + this.rotSpd);
+		if (this.isOffscreen()) {
+			this.destroy(); //NOTE testing - call deactivate() instead.
+			// this.deactivate();
+		}
+		//debugger;
+		this.phase1();
+		this.alienBulletSystem.update();
+	}
+
+	render() {
+		CTX.save();
+		this.alienBulletSystem.render();
+		CTX.translate(this.transform.getX(), this.transform.getY());
+		CTX.rotate(this.transform.getRotation());
+		CTX.drawImage(this.image.image, -this.image.wOffset, -this.image.hOffset);
+		CTX.restore();
+	}
+
+
+	phase1() {
+		//debugger;
+		//if out of bounds switch direction
+		//console.log('calling phase1');
+		// if(this.transform.getX() > this.eastBuffer-this.sprite.frameWidth || this.transform.getX() < this.westBuffer+200){
+		// 	this.moveSpeed *=-1;
+		// }
+		this.phase1Move++;
+		//this.transform.getLocation().add(this.moveSpeed, Math.sin(this.phase1Move*0.5*Math.PI/25));//move ship in wave style
+		this.phase1Shoot --;
+		if(this.phase1Shoot <0){
+			//console.log('calling bullet');
+			this.alienBulletSystem.spawnBullet(this.getX(), this.getY(),180, 5 + this.velocity.y, Colors.RED);
+			this.phase1Shoot = 60;
+			//this.life--; //REMOVE THIS ONCE COLLISION WORKS JUST TESTING PHASES
+		}
+	}
+}
+
 //Placeholder enemy class, blue squares.
 class TestEnemy extends TestAsteroid {
 	constructor(points = 10) {
