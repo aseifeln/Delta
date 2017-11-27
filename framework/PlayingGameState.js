@@ -10,6 +10,7 @@ class PlayingGameState extends GameState {
 		//Define Systems here.
 		let bgSystem = new BGSystem();
 		let playerSystem = new PlayerSystem(new Player(WIDTH/2, HEIGHT/2)); //updates and renders player
+		let uiSystem = new UISystem(playerSystem);
 		let playerBulletSystem = new PlayerBulletSystem(playerSystem);//updates and renders player bullets
 		let asteroidSystem = new GameObjectSystem(); //updates and renders asteriods
 		let enemySystem = new GameObjectSystem(); //updates and renders enemies
@@ -30,6 +31,7 @@ class PlayingGameState extends GameState {
 		this.addSystem(bossSystem);
 		this.addSystem(levelSystem);
 		this.addSystem(collisionSystem);
+		this.addSystem(uiSystem);
 
 		let gameWonListener = new EventListener(EventFilter.GAME, function(event) {
 			if (event.getEventEnum() == EventEnum.GAME_WON) {

@@ -56,15 +56,12 @@ class CollisionSystem extends System {
 	// Check if player is colliding with an asteroid
 	checkPlayer_Asteroids() {
 		let asteroids = this.asteroidSystem.getObjects(); //returns an array of asteroids
-
-		let ploc = this.player.getLocation();
 		for (let ast of asteroids) {
-			//get asteroids location for param in distance checker
-			let loc = ast.getLocation();
 			//if distance between player & asteroid < dist
 				//ast.deactivate();
 				if (CollisionSystem.Distance_check(this.player, ast) == true) {
-					this.player.damage(0);
+					this.player.damage(10);
+					ast.deactivate();
 					//TODO do damge, game over screen if player dies
 				}
 		}
@@ -80,7 +77,6 @@ class CollisionSystem extends System {
 		let ast  = this.asteroidSystem.getObjects();
 		//checks arrays of bullet and asteroid objects
 		for(let p of proj){
-			//gets locations of bullets
 			for(let a of ast){
 				if(CollisionSystem.Distance_check(p, a) == true){
 					// a.damage(0);
@@ -93,17 +89,9 @@ class CollisionSystem extends System {
 
 	//Checks if the player collides with the boss
 	checkBossCollision_Player(){
-		//gets player location and boss object
-		let ploc = this.player.getLocation();
 		let boss = this.bossSystem.getObjects();
-
-		//checks the array of boss to see if boss objects are colliding with player
-		//if true, player and console report damage
 		for(let b of boss){
-			//gets boss object location
-			let bloc = b.getLocation();
-
-			if(CollisionSystem.Distance_check(ploc,bloc) == true){
+			if(CollisionSystem.Distance_check(this.player, boss) == true){
 				this.player.damage(0);
 				//TODO do damge, game over screen if player dies
 			}
@@ -122,7 +110,7 @@ class CollisionSystem extends System {
 		for(let p of proj){
 			//gets player projectile location and places it as a param
 			let loc = p.getLocation();
-			if(CollisionSystem.Distance_check(ploc,loc) == true){
+			if(CollisionSystem.Distance_check(ploc, loc) == true){
 				this.player.damage(0);
 				//TODO do damge, game over screen if player dies
 			}
@@ -140,7 +128,7 @@ class CollisionSystem extends System {
 			//gets location of projectile
 			for(let b of boss){
 				// gets boss object location
-				if(CollisionSystem.Distance_check(p,b) == true){
+				if(CollisionSystem.Distance_check(p, b) == true){
 					b.damage(10);
 					p.destroy();
 					console.log("boss dam");

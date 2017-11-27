@@ -6,6 +6,10 @@ class PlayerSystem extends System {
 	}
 	update() {
 		this.player.update();
+		if (this.player.getLife() <= 0) {
+			const e = new Event(EventFilter.PLAYER, EventEnum.PLAYER_DIE, undefined);
+			this.publishEvent(e);
+		}
 	}
 	render() {
 		this.player.render();
