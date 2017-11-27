@@ -310,17 +310,17 @@ class TestAsteroid extends GameObject {
 	}
 
 	update() {
-		this.life -= 0.5;
+		//this.life -= 0.5;
 		//console.log(this.life, 'life');
-		if(this.life<-50){
+		if(this.life<=0){
 			this.destroy();
 		}
 
-		if(this.life==0){
+		if(this.life==50){
 			console.log('split and create new');
 		}
 
-		if(this.life>0){
+		if(this.life>50){
 			this.image = Images.asteroid;
 		}
 		else {
