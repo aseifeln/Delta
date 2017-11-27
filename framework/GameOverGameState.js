@@ -6,6 +6,7 @@ class GameOverGameState extends GameState {
 
 		const startListener = new EventListener(EventFilter.KEYBOARD, function(event) {
 			if (event.getEventEnum() == EventEnum.keydown_g) {
+				ENGINE.setupNewGame();
 				ENGINE.startGame();
 			}
 		});
