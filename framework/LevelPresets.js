@@ -118,9 +118,9 @@ const LevelPresets2 = {
 }
 
 
-//return a new Asteroid for the SCROLLER mode
+//return a new Alien for the SCROLLER mode
 function make_scroll_ast(dxRange, dyRange) {
-	let ast = new TestAsteroid();
+	let ast = new TestAlien();
 	const x = Mode.SCROLLER.ast_start_x_range.rand();
 	const y = Mode.SCROLLER.ast_start_y_range.rand();
 	ast.setLocation(x, y);
