@@ -67,9 +67,6 @@ class CollisionSystem extends System {
 		}
 	}
 
-
-
-
 	// Check if any of the player's projectiles are colliding wit an asteroid
 	checkProjectiles_Asteroids() {
 		// get player bullet and asteroid objects

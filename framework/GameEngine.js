@@ -13,6 +13,7 @@ class GameEngine {
 		this.playingState = new PlayingGameState();
 		this.pausedState = new PauseGameState();
 		this.startState = new StartMenuGameState();
+		this.gameOverState = new GameOverGameState();
 		this.currentState = this.startState; //the GameEngine's current State
 		this.currentState.onEnter();
 	}
@@ -30,7 +31,9 @@ class GameEngine {
 	}
 
 	//start playing a new game from the start menu
-	startGame() {} //TODO
+	startGame() {
+		this.enterState(this.startState);
+	} //TODO
 
 	//setup a new game by creating new GameStates (discard old ones)
 	setupNewGame() {
@@ -38,6 +41,11 @@ class GameEngine {
 		this.playingState = new PlayingGameState();
 		this.currentState = this.playingState; //the GameEngine's current State
 		this.currentState.onEnter();
+	}
+
+	//called for gameover
+	gameOver() {
+		this.enterState(this.gameOverState);
 	}
 
 	//called every frame
