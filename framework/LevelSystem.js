@@ -299,7 +299,7 @@ Images.asteroid.image.src = "assets/asteroid.png";
 Images.asteroid_broken.image.src = "assets/asteroid_broken.png";
 Images.alien.image.src = "assets/alien.png";
 
-//Placeholder asteroid class, black rotating squares.
+
 class TestAsteroid extends GameObject {
 	constructor(points = 10) {
 		super(points);
@@ -347,7 +347,7 @@ class TestAsteroid extends GameObject {
 }
 
 
-//Placeholder asteroid class, black rotating squares.
+
 class TestAlien extends GameObject {
 	constructor(points = 10) {
 		super(points);
@@ -402,7 +402,7 @@ class TestAlien extends GameObject {
 }
 
 
-//Placeholder enemy class, blue squares.
+
 class TestEnemy extends TestAlien {
 	constructor(points = 10) {
 		super(points);
