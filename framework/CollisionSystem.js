@@ -30,9 +30,9 @@ class CollisionSystem extends System {
 		this.checkEnemyProjectile_Player();
 		//TODO enemy collides w player
 		if (this.bossSystem.getObjects()[0] != undefined) { //check if boss is present
-		// 	// this.checkBossCollision_Player();
-		// 	// this.checkBossProjectile_Player();
-		// 	// this.checkProjectiles_Boss();
+			this.checkBossCollision_Player();
+			this.checkBossProjectile_Player();
+			this.checkProjectiles_Boss();
 		}
 	}
 
@@ -118,11 +118,9 @@ class CollisionSystem extends System {
 
 	//Checks if the player collides with the boss
 	checkBossCollision_Player(){
-		let boss = this.bossSystem.getObjects();
-		for(let b of boss){
-			if(CollisionSystem.Distance_check(this.player, boss) == true){
-				this.player.damage(0);
-			}
+		let boss = this.bossSystem.getObjects()[0];
+		if(boss != undefined && CollisionSystem.Distance_check(this.player, boss) == true){
+			this.player.damage(0);
 		}
 	}
 
@@ -130,11 +128,12 @@ class CollisionSystem extends System {
 	checkBossProjectile_Player(){
 		//gets player location and boss projectiles
 		let boss = this.bossSystem.getObjects()[0];
-		let proj = boss.getBullets();
-
-		for(let p of proj){
-			if(CollisionSystem.Distance_check(p, this.player) == true){
-				this.player.damage(10);
+		if (boss != undefined) {
+			let proj = boss.getBullets();
+			for(let p of proj){
+				if(CollisionSystem.Distance_check(p, this.player) == true){
+					this.player.damage(10);
+				}
 			}
 		}
 	}

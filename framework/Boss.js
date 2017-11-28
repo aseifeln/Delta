@@ -123,6 +123,6 @@ class Boss extends GameObject {
 		CTX.restore();
 	}
 	getBullets() {
-		return this.enemyBulletSystem().getObjects();
+		return this.bossBulletSystem.getObjects();
 	}
 }
