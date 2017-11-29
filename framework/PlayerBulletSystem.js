@@ -2,7 +2,7 @@ class PlayerBulletSystem extends GameObjectSystem {
 	constructor(playerSystem) {
 		super();
 		this.player = playerSystem.player;
-		this.rapid = 10;//timer before you can spawn new bullet
+		this.rapid = 20;//timer before you can spawn new bullet
 	}
 	update() {
 		super.update();
@@ -18,7 +18,7 @@ class PlayerBulletSystem extends GameObjectSystem {
 		//if timer is reset, player can shoot a new bullet
 		if(this.rapid < 0) {
 			this.addObject(new Bullet(this.player.getX(), this.player.getY(), this.player.angle, 10, Colors.GREEN));
-			this.rapid = 10;
+			this.rapid = 20;
 		}
 	}
 }

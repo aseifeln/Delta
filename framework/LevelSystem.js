@@ -186,7 +186,7 @@ class LevelSystem extends System {
 		} else if (mode.type == "BOSS") {
 			//TODO
 			this.levelCondition = this.isScoreReached;
-			this.player.selectScrollerMode(); //set player move mode
+			this.player.selectAsteroidMode(); //set player move mode
 		}
 		else { throw new TypeError("invalid mode: " + mode); }
 	}

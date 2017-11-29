@@ -120,7 +120,7 @@ class CollisionSystem extends System {
 	checkBossCollision_Player(){
 		let boss = this.bossSystem.getObjects()[0];
 		if(boss != undefined && CollisionSystem.Distance_check(this.player, boss) == true){
-			this.player.damage(0);
+			this.player.damage(10);
 		}
 	}
 
@@ -132,7 +132,8 @@ class CollisionSystem extends System {
 			let proj = boss.getBullets();
 			for(let p of proj){
 				if(CollisionSystem.Distance_check(p, this.player) == true){
-					this.player.damage(10);
+					this.player.damage(25);
+					p.destroy();
 				}
 			}
 		}
@@ -165,7 +166,7 @@ class CollisionSystem extends System {
 			for(let b of boss){
 				// gets boss object location
 				if(CollisionSystem.Distance_check(p, b) == true){
-					b.damage(10);
+					b.damage(2);
 					p.destroy();
 					console.log("boss dam");
 				}
