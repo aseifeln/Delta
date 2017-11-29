@@ -281,6 +281,13 @@ const Images = {
 		wOffset: 51/2,
 		hOffset: 49/2,
 	},
+	asteroid_broken: {
+		image: new Image(),
+		width: 51,
+		height: 49,
+		wOffset: 51/2,
+		hOffset: 49/2,
+	},
 	alien: {
 		image: new Image(),
 		width: 51,
@@ -290,7 +297,7 @@ const Images = {
 	}
 }
 Images.asteroid.image.src = "assets/asteroid.png";
-// Images.asteroid.image.src = "assets/asteroid.png";
+Images.asteroid_broken.image.src = "assets/asteroid_broken.png";
 Images.alien.image.src = "assets/alien.png";
 
 class TestAsteroid extends GameObject {
@@ -298,22 +305,10 @@ class TestAsteroid extends GameObject {
 		super(points);
 		this.rotSpd = Math.random() * (Math.PI/30);
 		this.image = Images.asteroid;
+		this.brokenImage = Images.asteroid_broken;
 	}
 
 	update() {
-		if(this.life<=0){
-			this.destroy();
-		}
-
-		if(this.life==50){
-			console.log('split and create new');
-		}
-
-		if(this.life>50){
-			this.image = Images.asteroid;
-		} else {
-			this.image = Images.asteroid_broken;
-		}
 
 		this.transform.getLocation().addPoint(this.velocity);
 		this.transform.setRotation(this.transform.getRotation() + this.rotSpd);
@@ -329,7 +324,7 @@ class TestAsteroid extends GameObject {
 		if (this.life > 50) {
 			CTX.drawImage(this.image.image, -this.image.wOffset, -this.image.hOffset);
 		} else {
-			CTX.drawImage(this.image.image, -this.image.wOffset/2, -this.image.hOffset/2);
+			CTX.drawImage(this.brokenImage.image, -this.image.wOffset/2, -this.image.hOffset/2);
 		}
 		CTX.restore();
 	}
