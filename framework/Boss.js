@@ -4,10 +4,11 @@ class BossSprite {
 		this.boss_1 = new Image();
 		this.boss_2 = new Image();
 
-		this.boss_1.src = 'assets/boss_1.png';
-		this.boss_2.src = 'assets/boss_2.png';
+		this.boss_1.src = 'assets/boss_1.png';//boss sprite phase 1
+		this.boss_2.src = 'assets/boss_2.png';//bost sprite phase 2
 
-		this.shift = 0;
+		//sprit rendering 
+		this.shift = 0; //shift for sprite frames
 		this.frameWidth = 200;
 		this.frameHeight = 200;
 		this.widthOffset = this.frameWidth/2;
@@ -33,14 +34,14 @@ class BossSprite {
 }
 
 class Boss extends GameObject {
-	constructor(points = 100, life = 100) {
+	constructor(points = 500, life = 100) {
 		super(points, life);
-		this.transform.setLocation(WIDTH/2,-300);
-		this.bossBulletSystem = new EnemyBulletSystem();
-		this.sprite = new BossSprite();
-		this.state = 0;
+		this.transform.setLocation(WIDTH/2,-300);//origin point offscreen
+		this.bossBulletSystem = new EnemyBulletSystem();//boss bullets
+		this.sprite = new BossSprite();//sprite
+		this.state = 0; //state information to keep track of what boss should be doing
 		this.moveSpeed = 2;
-		this.phase1Shoot = 60;
+		this.phase1Shoot = 60; //shooting speeds
 		this.phase2Shoot = 60;
 		this.phase1Move = 0;//makes the boss wiggle in phase 1
 		this.phase2Rotate = 0;
@@ -49,6 +50,7 @@ class Boss extends GameObject {
 	update() {
 		this.sprite.update();
 		this.bossBulletSystem.update();
+		//switch state for boss states/phases
 		switch(this.state){
 			case 0:
 				this.sprite.selectBoss1();
@@ -65,6 +67,7 @@ class Boss extends GameObject {
 				break;
 		}
 	}
+	//starting boss movement(decends downwards)
 	start() {
 		if(this.transform.getY() < 100){
 			this.transform.getLocation().add(0, this.moveSpeed);
@@ -73,6 +76,7 @@ class Boss extends GameObject {
 			this.state =1;
 		}
 	}
+	//phase one move left to right in sin wave
 	phase1() {
 		//if out of bounds switch direction
 		if(this.transform.getX() > this.eastBuffer-this.sprite.frameWidth || this.transform.getX() < this.westBuffer+200){
@@ -84,15 +88,13 @@ class Boss extends GameObject {
 		if(this.phase1Shoot <0){
 			this.bossBulletSystem.spawnBullet(this.getX(), this.getY(),180, 2, Colors.WHITE);
 			this.phase1Shoot = 60;
-			this.life--; //REMOVE THIS ONCE COLLISION WORKS JUST TESTING PHASES
 		}
 		if(this.life < 50){
 			this.state = 2;
 		}
 	}
+	//phase 2 shoot bullets while standing still
 	phase2() {
-		//this.transform.setRotation(this.phase2Move*Math.PI/180)
-		//this.phase2Move *= -1;
 		this.phase2Shoot --;
 		if(this.phase2Shoot < 0){
 			this.rotate(this.phase2Rotate);
@@ -123,6 +125,6 @@ class Boss extends GameObject {
 		CTX.restore();
 	}
 	getBullets() {
-		return this.enemyBulletSystem().getObjects();
+		return this.bossBulletSystem.getObjects();
 	}
 }

@@ -59,7 +59,12 @@ const LevelPresets2 = {
 			let e_numPerSpawnRange = e_spawnFreq_numPer_pts[1];
 
 			let a_supplier = undefined;
-			const e_supplier = function() { return new TestEnemy(); };
+			// const e_supplier = function() { return new TestEnemy(); };
+			
+			let e_supplier = function() {
+				return make_scroll_alien();
+			};
+			
 			let bossSpawner = undefined;
 			if (mode == Mode.SCROLLER) {
 				a_supplier = function() {
@@ -94,29 +99,50 @@ const LevelPresets2 = {
 	},
 
 	//formatted text from level_presets.tsv containing level data.
+	//level system presets
 	levelStr: "" +
-	"1	SCROLLER	(-0.5, 0.5), (2, 5)	100	-1	(20, 50), (1, 1)	0	(1, 1), (0, 0)\n" +
-	"2	SCROLLER	(-0.5, 0.5), (2, 5)	200	-1	(20, 45), (1, 1)	0	(1, 1), (0, 0)\n" +
-	"3	SCROLLER	(-0.6, 0.6), (2, 6)	400	-1	(18, 45), (1, 1)	0	(1, 1), (0, 0)\n" +
-	"4	SCROLLER	(-0.6, 0.6), (2, 6)	600	-1	(15, 40), (1, 1)	0	(1, 1), (0, 0)\n" +
-	"5	SCROLLER	(-0.65, 0.65), (2, 7)	800	-1	(13, 35), (1, 1)	0	(1, 1), (0, 0)\n" +
-	"6	ASTEROID	(1, 3)	1000	-1	(20, 50), (1, 1)	0	(1, 1), (0, 0)\n" +
-	"7	SCROLLER	(-0.5, 0.5), (2, 5)	1100	-1	(20, 50), (1, 1)	3	(1, 1), (3, 3)\n" +
-	"8	SCROLLER	(-0.5, 0.5), (2, 5)	1200	-1	(20, 45), (1, 1)	5	(1, 1), (5, 5)\n" +
-	"9	SCROLLER	(-0.6, 0.6), (2, 6)	1400	-1	(18, 45), (1, 1)	5	(1, 1), (5, 5)\n" +
-	"10	SCROLLER	(-0.6, 0.6), (2, 6)	1600	-1	(15, 40), (1, 1)	7	(1, 1), (7, 7)\n" +
-	"11	SCROLLER	(-0.65, 0.65), (2, 7)	1800	-1	(13, 35), (1, 1)	7	(1, 1), (7, 7)\n" +
-	"12	ASTEROID	(1, 3)	2000	-1	(20, 50), (1, 1)	9	(1, 1), (9, 9)\n" +
-	"13	BOSS	(0, 0), (0, 0)	2500	0	(0, 0), (0, 0)	0	(0, 0), (0, 0)\n",
+	"1	SCROLLER	(-0.5, 0.5), (2, 5)	100	-1	(20, 50), (1, 1)	7	(100, 500), (0, 0)\n" +
+	"2	ASTEROID	(1, 3)	200	-1	(20, 50), (1, 1)	3	(100, 500), (9, 9)\n" +
+	"3	BOSS	(0, 0), (0, 0)	700	0	(0, 0), (0, 0)	0	(0, 0), (0, 0)\n" +
+	"4	ASTEROID	(1, 3)	900	-1	(20, 40), (1, 1)	0	(0, 0), (0, 0)\n" +
+	"5	SCROLLER	(-0.65, 0.65), (2, 7)	1100	-1	(13, 35), (1, 1)	10	(50, 50), (0, 0)\n" +
+	"6	BOSS	(0, 0), (0, 0)	1600	0	(0, 0), (0, 0)	0	(0, 0), (0, 0)\n" +
+	"7	SCROLLER	(-0.5, 0.5), (2, 5)	1900	-1	(20, 50), (1, 1)	20	(50, 50), (3, 3)\n" +
+	"8	ASTEROID	(1, 3)	2200	-1	(20, 50), (1, 1)	12	(100, 500), (9, 9)\n" +
+	"9	BOSS	(0, 0), (0, 0)	2500	0	(0, 0), (0, 0)	0	(0, 0), (0, 0)\n" +
+	"10	SCROLLER	(-0.6, 0.6), (2, 6)	1600	-1	(15, 40), (1, 1)	-1	(50, 50), (0, 0)\n" +
+	"11	ASTEROID	(1, 3)	2200	-1	(10, 40), (1, 1)	20	(100, 500), (9, 9)\n" +
+	"12	BOSS	(0, 0), (0, 0)	2500	0	(0, 0), (0, 0)	0	(0, 0), (0, 0)\n" +
+	"13	ASTEROID	(1, 3)	200	-1	(10, 30), (1, 1)	0	(0, 0), (0, 0)\n",
 
 	asteroid_spawnAreas: [
 		new Rectangle(-80, -80, WIDTH + 40, 50), //north
 		new Rectangle(-80, HEIGHT + 40, WIDTH + 40, 50), //south
-		new Rectangle(-80, -80, 50, HEIGHT + 40), //east
+		new Rectangle(-80, -80, 50, HEIGHT + 40), //west
 		new Rectangle(WIDTH + 40, -80, 50, HEIGHT + 40), //east
 	],
 }
 
+
+//return a new alien for the SCROLLER mode
+function make_scroll_alien() {
+	let obj = new Alien();
+	const x = WIDTH/2 + ((WIDTH/2 + 50)* randSign());
+	const y = 20;
+	obj.setLocation(x, y);
+	let dx = undefined;
+	let dy = undefined;
+	let spd = 2;
+	if (x < 0) {
+		dx = spd;
+		dy = 0;
+	} else {
+		dx = -spd;
+		dy = 0;
+	}
+	obj.setVelocity(dx, dy);
+	return obj;
+}
 
 //return a new Asteroid for the SCROLLER mode
 function make_scroll_ast(dxRange, dyRange) {

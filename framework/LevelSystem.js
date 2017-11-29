@@ -50,7 +50,7 @@ class ObjectSpawner {
 		this.numPerSpawnRange = numPerSpawnRange; // a number specifying the number of objects to spawn each spawn interval.
 		this.maxNum = maxNum; //maximum number of objects that can be spawned. set to -1 for unlimited.
 		this.totalSpawned = 0; //total number spawned so far
-		this.maxReached = false; //flag, true if totalSpawned reaches maxNum
+		this.maxReached = maxNum > 0  || maxNum == -1? false : true; //flag, true if totalSpawned reaches maxNum
 		this.nextSpawn = this.spawnFreqRange.randInt(); //countdown timer till next spawn
 		this.isReady = false; //flag, true if countdown timer has reached 0 and an object has been spawned.
 		this.objBuffer = new Array(); //array for holding spawned objects. used by LevelManager
@@ -186,7 +186,7 @@ class LevelSystem extends System {
 		} else if (mode.type == "BOSS") {
 			//TODO
 			this.levelCondition = this.isScoreReached;
-			this.player.selectScrollerMode(); //set player move mode
+			this.player.selectAsteroidMode(); //set player move mode
 		}
 		else { throw new TypeError("invalid mode: " + mode); }
 	}
@@ -304,7 +304,6 @@ class TestAsteroid extends GameObject {
 		this.transform.getLocation().addPoint(this.velocity);
 		this.transform.setRotation(this.transform.getRotation() + this.rotSpd);
 		if (this.isOffscreen()) {
-			// this.destroy(); //NOTE testing - call deactivate() instead.
 			this.deactivate();
 		}
 	}
@@ -315,6 +314,67 @@ class TestAsteroid extends GameObject {
 		CTX.rotate(this.transform.getRotation());
 		CTX.drawImage(this.image.image, -this.image.wOffset, -this.image.hOffset);
 		CTX.restore();
+	}
+}
+
+class Alien extends GameObject {
+	constructor(points = 10) {
+		super(points);
+		//this.rotSpd = Math.random() * (Math.PI/30);
+		this.image = Images.alien;
+		this.alienBulletSystem = new EnemyBulletSystem();
+		
+		this.phase1Shoot = 60;
+	}
+
+	//alien moves side to side across screen, and slowly moves downward.
+	update() {
+		this.transform.getLocation().addPoint(this.velocity);
+		this.transform.setRotation(this.transform.getRotation() + this.rotSpd);
+		if (this.isOffscreen()) {
+			this.deactivate();
+		}
+		if (this.getX() - 50 <= 0) {
+			this.getVelocity().set(this.getVelocity().getX() * -1, this.getVelocity().getY());
+			this.setLocation(0 + 50, this.getY() + 20);
+		}
+		if (this.getX() + 50 >= WIDTH) {
+			this.getVelocity().set(this.getVelocity().getX() * -1, this.getVelocity().getY());
+			this.setLocation(WIDTH - 50, this.getY() + 20);
+		}
+		this.phase1();
+		this.alienBulletSystem.update();
+	}
+
+	render() {
+		CTX.save();
+		this.alienBulletSystem.render();
+		CTX.translate(this.transform.getX(), this.transform.getY());
+		CTX.rotate(this.transform.getRotation());
+		CTX.drawImage(this.image.image, -this.image.wOffset, -this.image.hOffset);
+		CTX.restore();
+	}
+
+
+	phase1() {
+		//debugger;
+		//if out of bounds switch direction
+		//console.log('calling phase1');
+		// if(this.transform.getX() > this.eastBuffer-this.sprite.frameWidth || this.transform.getX() < this.westBuffer+200){
+		// 	this.moveSpeed *=-1;
+		// }
+		this.phase1Move++;
+		//this.transform.getLocation().add(this.moveSpeed, Math.sin(this.phase1Move*0.5*Math.PI/25));//move ship in wave style
+		this.phase1Shoot --;
+		if(this.phase1Shoot <0){
+			//console.log('calling bullet');
+			this.alienBulletSystem.spawnBullet(this.getX(), this.getY(),180, 5 + this.velocity.y, Colors.RED);
+			this.phase1Shoot = 60;
+			//this.life--; //REMOVE THIS ONCE COLLISION WORKS JUST TESTING PHASES
+		}
+	}
+	getBullets() {
+		return this.alienBulletSystem.getObjects();
 	}
 }
 
