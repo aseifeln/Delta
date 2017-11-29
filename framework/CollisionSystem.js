@@ -71,7 +71,7 @@ class CollisionSystem extends System {
 			}
 		}
 	}
-	
+
 	checkPlayer_enemies() {
 		let enemies = this.enemySystem.getObjects(); //returns an array of asteroids
 		for (let e of enemies) {
@@ -92,14 +92,14 @@ class CollisionSystem extends System {
 		for(let p of proj){
 			for(let a of ast){
 				if(CollisionSystem.Distance_check(p, a) == true){
-					//a.damage(50);
-					a.destroy();
+					a.damage(50);
+					// a.destroy();
 					p.destroy();
 				}
 			}
 		}
 	}
-	
+
 	// Check if any of the player's projectiles are colliding with an alien/enemy
 	checkProjectiles_enemy() {
 		let proj = this.pBulletSystem.getObjects();
@@ -114,7 +114,7 @@ class CollisionSystem extends System {
 			}
 		}
 	}
-	
+
 
 	//Checks if the player collides with the boss
 	checkBossCollision_Player(){
@@ -138,18 +138,18 @@ class CollisionSystem extends System {
 			}
 		}
 	}
-	
+
 	//checks to see if bullets from enemies hit the player.
 	checkEnemyProjectile_Player(){
 		let enemies = this.enemySystem.getObjects();
-		
+
 		for(let e of enemies){
 			for (let b of e.getBullets()) {
 				if(CollisionSystem.Distance_check(b, this.player) == true){
 					this.player.damage(10);
 					b.deactivate();
 				}
-				
+
 			}
 		}
 	}

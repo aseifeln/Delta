@@ -290,9 +290,9 @@ const Images = {
 	}
 }
 Images.asteroid.image.src = "assets/asteroid.png";
+// Images.asteroid.image.src = "assets/asteroid.png";
 Images.alien.image.src = "assets/alien.png";
 
-//Placeholder asteroid class, black rotating squares.
 class TestAsteroid extends GameObject {
 	constructor(points = 10) {
 		super(points);
@@ -301,6 +301,20 @@ class TestAsteroid extends GameObject {
 	}
 
 	update() {
+		if(this.life<=0){
+			this.destroy();
+		}
+
+		if(this.life==50){
+			console.log('split and create new');
+		}
+
+		if(this.life>50){
+			this.image = Images.asteroid;
+		} else {
+			this.image = Images.asteroid_broken;
+		}
+
 		this.transform.getLocation().addPoint(this.velocity);
 		this.transform.setRotation(this.transform.getRotation() + this.rotSpd);
 		if (this.isOffscreen()) {
@@ -312,10 +326,40 @@ class TestAsteroid extends GameObject {
 		CTX.save();
 		CTX.translate(this.transform.getX(), this.transform.getY());
 		CTX.rotate(this.transform.getRotation());
-		CTX.drawImage(this.image.image, -this.image.wOffset, -this.image.hOffset);
+		if (this.life > 50) {
+			CTX.drawImage(this.image.image, -this.image.wOffset, -this.image.hOffset);
+		} else {
+			CTX.drawImage(this.image.image, -this.image.wOffset/2, -this.image.hOffset/2);
+		}
 		CTX.restore();
 	}
 }
+
+
+// //Placeholder asteroid class, black rotating squares.
+// class TestAsteroid extends GameObject {
+// 	constructor(points = 10) {
+// 		super(points);
+// 		this.rotSpd = Math.random() * (Math.PI/30);
+// 		this.image = Images.asteroid;
+// 	}
+//
+// 	update() {
+// 		this.transform.getLocation().addPoint(this.velocity);
+// 		this.transform.setRotation(this.transform.getRotation() + this.rotSpd);
+// 		if (this.isOffscreen()) {
+// 			this.deactivate();
+// 		}
+// 	}
+//
+// 	render() {
+// 		CTX.save();
+// 		CTX.translate(this.transform.getX(), this.transform.getY());
+// 		CTX.rotate(this.transform.getRotation());
+// 		CTX.drawImage(this.image.image, -this.image.wOffset, -this.image.hOffset);
+// 		CTX.restore();
+// 	}
+// }
 
 class Alien extends GameObject {
 	constructor(points = 10) {
@@ -323,7 +367,7 @@ class Alien extends GameObject {
 		//this.rotSpd = Math.random() * (Math.PI/30);
 		this.image = Images.alien;
 		this.alienBulletSystem = new EnemyBulletSystem();
-		
+
 		this.phase1Shoot = 60;
 	}
 
